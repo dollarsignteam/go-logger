@@ -10,8 +10,9 @@ import (
 )
 
 type LoggerOptions struct {
-	Level string
-	Name  string
+	Level      string
+	Name       string
+	HideCaller bool
 }
 
 type Logger struct {
@@ -21,16 +22,12 @@ type Logger struct {
 func NewLogger(opts LoggerOptions) *Logger {
 	cfg := zap.NewDevelopmentConfig()
 	cfg.DisableStacktrace = true
+	cfg.DisableCaller = opts.HideCaller
 	cfg.EncoderConfig.ConsoleSeparator = " "
 	cfg.EncoderConfig.EncodeTime = localTimeEncoder
 	cfg.EncoderConfig.EncodeCaller = localCallerEncoder
-	cfg.EncoderConfig.EncodeLevel = customLevelEncoder()
+	cfg.EncoderConfig.EncodeLevel = localLevelEncoder(opts)
 	cfg.Level = zap.NewAtomicLevelAt(ToLevel(opts.Level))
-
-	if len(opts.Name) > 0 {
-		cfg.EncoderConfig.EncodeCaller = customCallerEncoder(opts.Name)
-	}
-
 	logger, _ := cfg.Build()
 	defer logger.Sync()
 	return &Logger{SugaredLogger: logger.Sugar()}
@@ -40,17 +37,11 @@ func localTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 	enc.AppendString(t.Format("2006-01-02 15:04:05.000 -07:00"))
 }
 
-func customCallerEncoder(name string) zapcore.CallerEncoder {
-	return func(c zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
-		enc.AppendString(fmt.Sprintf("[%s] [%s %s]", name, c.TrimmedPath(), c.Function))
-	}
-}
-
 func localCallerEncoder(c zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
 	enc.AppendString(fmt.Sprintf("[%s %s]", c.TrimmedPath(), c.Function))
 }
 
-func customLevelEncoder() zapcore.LevelEncoder {
+func localLevelEncoder(opts LoggerOptions) zapcore.LevelEncoder {
 	emojiLogLevels := map[string]string{
 		"debug":  "🟪 DEBUG ",
 		"info":   "⬜️ INFO  ",
@@ -60,8 +51,12 @@ func customLevelEncoder() zapcore.LevelEncoder {
 		"panic":  "🟥 PANIC ",
 		"fatal":  "🟥 FATAL ",
 	}
+	name := ""
+	if len(opts.Name) > 0 {
+		name = fmt.Sprintf(" [%s]", opts.Name)
+	}
 	return func(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
-		enc.AppendString("[go] " + emojiLogLevels[l.String()])
+		enc.AppendString(fmt.Sprintf("[go] %s%s", emojiLogLevels[l.String()], name))
 	}
 }
 
