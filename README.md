@@ -31,10 +31,10 @@ func main() {
 Output
 
 ```shell
-2022-02-03 14:41:19.388 +07:00 [go] 🟪 DEBUG  [DEMO] [main.go:13 main.main] I am a debug log
-2022-02-03 14:41:19.388 +07:00 [go] ⬜️ INFO   [DEMO] [main.go:14 main.main] I am a info log
-2022-02-03 14:41:19.388 +07:00 [go] 🟧 WARN   [DEMO] [main.go:15 main.main] I am a warn log
-2022-02-03 14:41:19.388 +07:00 [go] 🟥 ERROR  [DEMO] [main.go:16 main.main] I am a error log
+2022-02-03 14:48:58.277 +07:00 [go] 🟪 DEBUG  [DEMO] [go-logger/main.go:13 main.main] I am a debug log
+2022-02-03 14:48:58.277 +07:00 [go] ⬜️ INFO   [DEMO] [go-logger/main.go:14 main.main] I am a info log
+2022-02-03 14:48:58.277 +07:00 [go] 🟧 WARN   [DEMO] [go-logger/main.go:15 main.main] I am a warn log
+2022-02-03 14:48:58.277 +07:00 [go] 🟥 ERROR  [DEMO] [go-logger/main.go:16 main.main] I am a error log
 ```
 
 ## Author
