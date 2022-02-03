@@ -38,7 +38,8 @@ func localTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 }
 
 func localCallerEncoder(c zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(fmt.Sprintf("[%s %s]", c.TrimmedPath(), c.Function))
+	f := strings.Split(c.Function, "/")
+	enc.AppendString(fmt.Sprintf("[%s %s]", c.TrimmedPath(), f[len(f)-1]))
 }
 
 func localLevelEncoder(opts LoggerOptions) zapcore.LevelEncoder {
