@@ -18,7 +18,7 @@ func TestLoggerWithOptions(t *testing.T) {
 	opts := logger.LoggerOptions{
 		Level:      "debug",
 		Name:       "DEMO",
-		HideCaller: true,
+		HideCaller: false,
 	}
 	log := logger.NewLogger(opts)
 	log.Debug("I am a debug log")
