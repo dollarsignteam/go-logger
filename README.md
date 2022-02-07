@@ -12,13 +12,16 @@ go get github.com/dollarsignteam/go-logger
 
 ```go
 package main
+
 import (
   "github.com/dollarsignteam/go-logger"
 )
+
 func main() {
   opts := logger.LoggerOptions{
-    Level: "debug",
-    Name:  "DEMO",
+    Level:      "debug",
+    Name:       "DEMO",
+    HideCaller: false,
   }
   log := logger.NewLogger(opts)
   log.Debug("I am a debug log")
@@ -31,10 +34,10 @@ func main() {
 Output
 
 ```shell
-2022-02-03 14:48:58.277 +07:00 [go] 🟪 DEBUG  [DEMO] [go-logger/main.go:13 main.main] I am a debug log
-2022-02-03 14:48:58.277 +07:00 [go] ⬜️ INFO   [DEMO] [go-logger/main.go:14 main.main] I am a info log
-2022-02-03 14:48:58.277 +07:00 [go] 🟧 WARN   [DEMO] [go-logger/main.go:15 main.main] I am a warn log
-2022-02-03 14:48:58.277 +07:00 [go] 🟥 ERROR  [DEMO] [go-logger/main.go:16 main.main] I am a error log
+2022-02-03 22:49:44.933 +07:00 [go] 🟪 DEBUG  [DEMO] [main.go:14 main.main] I am a debug log
+2022-02-03 22:49:44.934 +07:00 [go] ⬜️ INFO   [DEMO] [main.go:15 main.main] I am a info log
+2022-02-03 22:49:44.934 +07:00 [go] 🟧 WARN   [DEMO] [main.go:16 main.main] I am a warn log
+2022-02-03 22:49:44.934 +07:00 [go] 🟥 ERROR  [DEMO] [main.go:17 main.main] I am a error log
 ```
 
 ## Author

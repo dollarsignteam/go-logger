@@ -14,10 +14,11 @@ func TestLogger(t *testing.T) {
 	log.Info("I am a info log")
 }
 
-func TestLoggerWithDebugLevelAndName(t *testing.T) {
+func TestLoggerWithOptions(t *testing.T) {
 	opts := logger.LoggerOptions{
-		Level: "debug",
-		Name:  "DEMO",
+		Level:      "debug",
+		Name:       "DEMO",
+		HideCaller: true,
 	}
 	log := logger.NewLogger(opts)
 	log.Debug("I am a debug log")
